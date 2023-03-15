@@ -34,8 +34,7 @@ public class PlayerController : MonoBehaviour
         {
             Attack();
             timeToNextAttack = Time.time + fireRate;
-        }
-  
+        }  
     }
     void FixedUpdate()
     {
