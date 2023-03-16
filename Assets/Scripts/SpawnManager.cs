@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     private int waveCount = 0;
     void Start()
     {
-        InvokeRepeating("SpawnEnemyWave", spawnDelay, spawnRate);
+        //InvokeRepeating("SpawnEnemyWave", spawnDelay, spawnRate);
     }
 
     void Update()

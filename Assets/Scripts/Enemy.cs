@@ -13,8 +13,9 @@ public class Enemy : MonoBehaviour
     private Animator animator;
     private bool onGround;
     private Vector3 startPosition;
-    private Vector3 newPosition;
+    private Vector3 firstOnGroundPosition;
     private Vector3 fallowPlayer;
+    private float randomPositionX;
     private enum State
     {
         EnterMap,
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
         enemyCol = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         curentHealth = maxHealth;
+        
     }
 
     void Update()
@@ -41,10 +43,24 @@ public class Enemy : MonoBehaviour
                 transform.Translate(fallowPlayer * Time.deltaTime * enemySpeed);
                 if(onGround)
                 {
+                    firstOnGroundPosition = transform.position;
+                    randomPositionX = GetRoamingPosition();
+                    Debug.Log(randomPositionX.ToString());
                     state = State.Roam;
                 }
                 break;
             case State.Roam:
+                if(randomPositionX != transform.position.x)
+                {
+                    //transform.Translate(Vector3.forward * enemySpeed * Time.deltaTime);
+                    transform.Translate(new Vector3((randomPositionX - transform.position.x), 0, 0).normalized * Time.deltaTime * enemySpeed);      
+                    if(randomPositionX == transform.position.x )
+                    {
+                        Debug.Log("hit");
+                       // randomPositionX = GetRoamingPosition();
+                       // transform.Translate(new Vector3((randomPositionX - transform.position.x), 0, 0).normalized * Time.deltaTime * enemySpeed);
+                    }
+                }
                 break;
             default:
                 break;
@@ -72,10 +88,27 @@ public class Enemy : MonoBehaviour
     }
     void IsMoving()
     {
-        if(startPosition.x != transform.position.x)
+        Vector3 curentScale = gameObject.transform.localScale;
+        if (startPosition.x < transform.position.x)
         {
-            animator.SetFloat("Speed", Mathf.Abs(transform.position.x));
+            animator.SetFloat("Speed", 1);
             startPosition = transform.position;
+            if(curentScale.x < 0)
+            {
+                curentScale.x *= -1;
+                gameObject.transform.localScale = curentScale;
+            }
+        }
+        else if (startPosition.x > transform.position.x)
+        {
+            animator.SetFloat("Speed", 1);
+            startPosition = transform.position;
+            if (curentScale.x > 0)
+            {
+                curentScale.x *= -1;
+                gameObject.transform.localScale = curentScale;
+
+            }
         }
         else
         {
@@ -88,5 +121,13 @@ public class Enemy : MonoBehaviour
         {
             onGround = true;
         }
+    }
+    Vector3 GetRandomDir()
+    {
+        return new Vector3(Random.Range(-1f, 1f), 0, 0).normalized;
+    }
+    float GetRoamingPosition()
+    {
+        return Random.Range(-9f, 18f);
     }
 }

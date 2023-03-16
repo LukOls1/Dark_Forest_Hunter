@@ -3870,6 +3870,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7796492331889436976, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7796492331889436976, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436979, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_Name
       value: Skeleton
@@ -3880,11 +3888,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.39
+      value: 14.08
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.49
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalPosition.z
