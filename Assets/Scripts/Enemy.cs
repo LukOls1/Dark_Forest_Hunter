@@ -7,7 +7,9 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Rigidbody2D enemyRb;
     private Collider2D enemyCol;
-    private float enemySpeed = 3;
+    private float enemySpeed = 2f;
+    private float distanceToAttack = 5f;
+    private float disengageDistance = 10f;
     private int curentHealth;
     private int maxHealth = 3;
     private Animator animator;
@@ -15,13 +17,24 @@ public class Enemy : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 firstOnGroundPosition;
     private Vector3 fallowPlayer;
-    private float randomPositionX;
+    private Vector2 randomPositionX;
     private enum State
     {
         EnterMap,
         Roam,
+        Attack,
+        Dead,
     }
     private State state = State.EnterMap;
+
+    public Transform attackPointE;
+    public float attackRange = 0.5f;
+    public LayerMask playerLay;
+    private int hitDamage;
+    private float attackDistance = 2.5f;
+    private int enemyDamage = 1;
+    // private bool attacked = false;
+    public bool isAttacking = false;
     void Start()
     {
         startPosition = transform.position;
@@ -45,22 +58,49 @@ public class Enemy : MonoBehaviour
                 {
                     firstOnGroundPosition = transform.position;
                     randomPositionX = GetRoamingPosition();
-                    Debug.Log(randomPositionX.ToString());
                     state = State.Roam;
                 }
                 break;
             case State.Roam:
-                if(randomPositionX != transform.position.x)
-                {
-                    //transform.Translate(Vector3.forward * enemySpeed * Time.deltaTime);
-                    transform.Translate(new Vector3((randomPositionX - transform.position.x), 0, 0).normalized * Time.deltaTime * enemySpeed);      
-                    if(randomPositionX == transform.position.x )
+
+                    if (randomPositionX.x >= transform.position.x)
                     {
-                        Debug.Log("hit");
-                       // randomPositionX = GetRoamingPosition();
-                       // transform.Translate(new Vector3((randomPositionX - transform.position.x), 0, 0).normalized * Time.deltaTime * enemySpeed);
+                        transform.Translate(Vector3.right * enemySpeed * Time.deltaTime);
+                    }
+                    else if (randomPositionX.x <= transform.position.x)
+                    {
+                        transform.Translate(Vector3.left * enemySpeed * Time.deltaTime);
+                    }
+                    if (Vector2.Distance(transform.position, randomPositionX) < 0.5f)
+                    {
+                        randomPositionX = GetRoamingPosition();
+                    }
+                    if (Vector2.Distance(transform.position, player.transform.position) < distanceToAttack)
+                    {
+                    state = State.Attack;
+                    }
+                break;
+            case State.Attack:
+                transform.Translate(fallowPlayer * Time.deltaTime * enemySpeed);
+                    
+                if(Vector2.Distance(transform.position, player.transform.position) < attackDistance)
+                {
+                    animator.SetTrigger("Attack");
+                    isAttacking = true;
+                    if (isAttacking == true)
+                    {
+                        enemyRb.velocity = new Vector2(0, 0);
                     }
                 }
+                
+                if(Vector2.Distance(transform.position, player.transform.position) > disengageDistance)
+                    {
+                        state = State.Roam;
+                    }
+                break;
+            case State.Dead:
+                
+                    Die();               
                 break;
             default:
                 break;
@@ -71,15 +111,15 @@ public class Enemy : MonoBehaviour
     {
         curentHealth -= hitDamage;
         animator.SetTrigger("Hurt");
-        Debug.Log(curentHealth.ToString());
         if (curentHealth <= 0)
         {
-            Die();
+            state = State.Dead;
         }
     }
     void Die()
     {
         animator.SetBool("isDead", true);
+        gameObject.GetComponent<Enemy>().enabled = false;
     }
     void FinishAnimation()
     {
@@ -122,12 +162,21 @@ public class Enemy : MonoBehaviour
             onGround = true;
         }
     }
-    Vector3 GetRandomDir()
+    Vector2 GetRoamingPosition()
     {
-        return new Vector3(Random.Range(-1f, 1f), 0, 0).normalized;
+        return new Vector2 (Random.Range(-9f, 18f), transform.position.y);
     }
-    float GetRoamingPosition()
+    void Attack()
     {
-        return Random.Range(-9f, 18f);
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPointE.position, attackRange, playerLay);
+
+        foreach (Collider2D player in hitPlayer)
+        {
+            player.GetComponent<PlayerController>().PlayerHurt(enemyDamage);
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPointE.position, attackRange);
     }
 }

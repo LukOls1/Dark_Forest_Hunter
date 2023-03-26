@@ -889,7 +889,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.15996, y: -0.8165307, z: -10}
+  m_LocalPosition: {x: 4.1599603, y: -0.8173549, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3870,14 +3870,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7796492331889436976, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7796492331889436976, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436979, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_Name
       value: Skeleton
@@ -3888,7 +3880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.08
+      value: 12.78
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3924,10 +3916,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7796492331889436990, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7796492331889436991, guid: bb9f3b5ea02f38c4383bd3d1e4efcbf6, type: 3}
-      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
     private float timeToNextAttack = 0;
     public LayerMask enemyLayers;
+    public int playerHealth = 5;
 
     void Start()
     {
@@ -39,9 +40,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
-       
+
         xMove = new Vector2(horizontalInput * playerSpeed, 0);
-       
+
         if (horizontalInput > 0 && !isFacingRight)
         {
             Flip();
@@ -53,10 +54,15 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Vector2.right * xMove * Time.deltaTime);
         animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
-        if(Input.GetButton("Jump") && groundedPlayer == true )
+        if (Input.GetButton("Jump") && groundedPlayer == true)
         {
-            Jump();           
-        }  
+            Jump();
+        }
+        if (playerHealth <= 0)
+        {
+            animator.SetBool("isDead", true);
+            gameObject.GetComponent<PlayerController>().enabled = false;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -67,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    
+
 
     void Flip()
     {
@@ -92,6 +100,11 @@ public class PlayerController : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().TakeDamage(hitDamage);
         }
+    }
+    public void PlayerHurt (int takeHit)
+    {
+        playerHealth -= takeHit;
+        Debug.Log(playerHealth.ToString());
     }
     private void OnDrawGizmosSelected()
     {
