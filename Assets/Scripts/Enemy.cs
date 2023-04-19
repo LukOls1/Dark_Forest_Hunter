@@ -14,8 +14,8 @@ public class Enemy : MonoBehaviour
     private int maxHealth = 3;
     private Animator animator;
     private bool onGround;
-    private Vector3 startPosition;
     private Vector3 firstOnGroundPosition;
+    private Vector3 startPosition;
     private Vector3 fallowPlayer;
     private Vector2 randomPositionX;
     private enum State
@@ -33,10 +33,11 @@ public class Enemy : MonoBehaviour
     private int hitDamage;
     private float attackDistance = 2.5f;
     private int enemyDamage = 1;
-    // private bool attacked = false;
     public bool isAttacking = false;
+    public SpawnManager spawnManager;
     void Start()
     {
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         startPosition = transform.position;
         player = GameObject.Find("Player");
         enemyRb = GetComponent<Rigidbody2D>();
@@ -99,7 +100,6 @@ public class Enemy : MonoBehaviour
                     }
                 break;
             case State.Dead:
-                
                     Die();               
                 break;
             default:
@@ -118,6 +118,7 @@ public class Enemy : MonoBehaviour
     }
     void Die()
     {
+        spawnManager.enemyDeaths += 1;
         animator.SetBool("isDead", true);
         gameObject.GetComponent<Enemy>().enabled = false;
     }

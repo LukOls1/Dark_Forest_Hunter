@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool isGameActive = false;
     // Move vars
     [SerializeField] private float playerSpeed = 7.0f;
     private Vector2 xMove;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && groundedPlayer && Time.time >= timeToNextAttack)
+        if (Input.GetButtonDown("Fire1") && groundedPlayer && Time.time >= timeToNextAttack && isGameActive)
         {
             Attack();
             timeToNextAttack = Time.time + fireRate;
