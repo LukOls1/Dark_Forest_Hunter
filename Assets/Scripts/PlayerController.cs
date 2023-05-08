@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = Vector2.zero;
         playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         groundedPlayer = false;
-        animator.SetBool("isJumping", true);
+        animator.SetBool("isJumping", true);   
     }
     void Attack()
     {

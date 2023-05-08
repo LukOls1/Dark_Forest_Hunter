@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private Enemy enemyScript;
     private GameObject player;
     private Rigidbody2D enemyRb;
     private Collider2D enemyCol;
@@ -34,15 +35,18 @@ public class Enemy : MonoBehaviour
     private float attackDistance = 2.5f;
     private int enemyDamage = 1;
     public bool isAttacking = false;
+    private bool addToList = true;
     public SpawnManager spawnManager;
     void Start()
     {
+        enemyScript = GetComponent<Enemy>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         startPosition = transform.position;
         player = GameObject.Find("Player");
         enemyRb = GetComponent<Rigidbody2D>();
         enemyCol = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
+        
         curentHealth = maxHealth;
         
     }
@@ -118,9 +122,14 @@ public class Enemy : MonoBehaviour
     }
     void Die()
     {
-        spawnManager.enemyDeaths += 1;
         animator.SetBool("isDead", true);
-        gameObject.GetComponent<Enemy>().enabled = false;
+        enemyScript.enabled = false;
+        if (addToList == true)
+        {
+            spawnManager.deadEnemies.Add(gameObject);
+            addToList = false;
+        }
+        
     }
     void FinishAnimation()
     {
