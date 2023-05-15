@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool isGameActive = false;
+    public bool isGameActive = true;
     // Move vars
     [SerializeField] private float playerSpeed = 7.0f;
     private Vector2 xMove;
@@ -16,13 +16,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
 
     //Attack vars 
-    [SerializeField] private float fireRate = 2.0f;
+    //private float fireRate = 2.0f;
     [SerializeField] private float attackRange = 0.5f;
     private int hitDamage = 1;
     public Transform attackPoint;
     private float timeToNextAttack = 0;
     public LayerMask enemyLayers;
-    public int playerHealth = 5;
+    private bool isDead = false;
+    [SerializeField] private PlayerStatsSO playerStats;
 
     void Start()
     {
@@ -32,11 +33,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && groundedPlayer && Time.time >= timeToNextAttack && isGameActive)
+        if (Input.GetButtonDown("Fire1") && groundedPlayer && Time.time >= timeToNextAttack && !isDead)
         {
             Attack();
-            timeToNextAttack = Time.time + fireRate;
-        }  
+            timeToNextAttack = Time.time + playerStats.AtkSpeed;
+        }
     }
     void FixedUpdate()
     {
@@ -44,25 +45,29 @@ public class PlayerController : MonoBehaviour
 
         xMove = new Vector2(horizontalInput * playerSpeed, 0);
 
-        if (horizontalInput > 0 && !isFacingRight)
+        if (horizontalInput > 0 && !isFacingRight && !isDead)
         {
             Flip();
         }
-        if (horizontalInput < 0 && isFacingRight)
+        if (horizontalInput < 0 && isFacingRight && !isDead)
         {
             Flip();
         }
-        transform.Translate(Vector2.right * xMove * Time.deltaTime);
-        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        if (!isDead)
+        {
+            transform.Translate(Vector2.right * xMove * Time.deltaTime);
+            animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        } 
 
-        if (Input.GetButton("Jump") && groundedPlayer == true)
+        if (Input.GetButton("Jump") && groundedPlayer == true && !isDead)
         {
             Jump();
         }
-        if (playerHealth <= 0)
+        if (playerStats.Life <= 0)
         {
+            isDead = true;
             animator.SetBool("isDead", true);
-            gameObject.GetComponent<PlayerController>().enabled = false;
+            horizontalInput = 0;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    
+
 
 
     void Flip()
@@ -89,23 +94,23 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = Vector2.zero;
         playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         groundedPlayer = false;
-        animator.SetBool("isJumping", true);   
+        animator.SetBool("isJumping", true);
     }
     void Attack()
     {
         animator.SetTrigger("Attack");
-        
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-    
-        foreach(Collider2D enemy in hitEnemies)
+
+        foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(hitDamage);
         }
     }
-    public void PlayerHurt (int takeHit)
+    public void PlayerHurt(int takeHit)
     {
-        playerHealth -= takeHit;
-        Debug.Log(playerHealth.ToString());
+        playerStats.Life -= takeHit;
+        Debug.Log(playerStats.Life.ToString());
     }
     private void OnDrawGizmosSelected()
     {

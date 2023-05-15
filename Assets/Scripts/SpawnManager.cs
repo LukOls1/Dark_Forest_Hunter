@@ -10,16 +10,17 @@ public class SpawnManager : MonoBehaviour
     private int enemiesOnMap;
     private Vector3[] spawnPositions = { new Vector3(21.5f, 1.5f, 0), new Vector3(-12, 1.5f, 0) } ;
     private int randomizePosition;
-    //private Vector3 spawnPosition = new Vector3(-12, 1.5f, 0); 
     private int spawnRate = 2;
     private float timeToNextEnemy = 0;
-    
-    public int enemyWaves = 2;
+
+    //public int enemyWaves = 3;
+    //public int enemyLenght = 1;
+    [SerializeField]
+    private WavesDataSO wavesData;
     public GameObject nextWaveScreen;
     public GameObject endLevelScreen;
     public List<GameObject> enemiesPrefabs;
     public List<GameObject> deadEnemies;
-    public int enemyLenght = 1;
     public int enemyCount = 0;
     public bool wavesDownCounted = false;
 
@@ -32,11 +33,11 @@ public class SpawnManager : MonoBehaviour
     void Update()
     {
         enemyDeaths = deadEnemies.Count;
-        if (enemyWaves > 0)
+        if (wavesData.WavesNumber > 0)
         {
             SpawnEnemyWave();
         }
-        if (enemyWaves <= 0)
+        if (wavesData.WavesNumber <= 0)
         {
             endLevelScreen.SetActive(true);
             endLevelController = GameObject.Find("EndLevelScreen").GetComponent<EndLevelController>();
@@ -45,25 +46,25 @@ public class SpawnManager : MonoBehaviour
     }
     void SpawnEnemyWave()
     {
-        if (enemyCount < enemyLenght && Time.time > timeToNextEnemy)
+        if (enemyCount < wavesData.EnemyNumber && Time.time > timeToNextEnemy)
         {
             randomizePosition = Random.Range(0, 2);
             Instantiate(enemiesPrefabs[0], spawnPositions[randomizePosition], enemiesPrefabs[0].transform.rotation);
             enemyCount += 1;
             timeToNextEnemy = Time.time + spawnRate;           
         }
-        if (enemyCount == enemyLenght && enemyDeaths == enemyCount)
+        if (enemyCount == wavesData.EnemyNumber && enemyDeaths == enemyCount)
         {
-            if (enemyWaves > 0 && !wavesDownCounted)
+            if (wavesData.WavesNumber > 0 && !wavesDownCounted)
             {
-                enemyWaves -= 1;
+                wavesData.WavesNumber -= 1;
                 wavesDownCounted = true;
             }
-            if (enemyWaves > 0 && wavesDownCounted)
+            if (wavesData.WavesNumber > 0 && wavesDownCounted)
             {
                 nextWaveScreen.SetActive(true);
                 nextwaveController = nextWaveScreen.GetComponent<NextWaveController>();
-                nextwaveController.NextWaveScreen(enemyWaves);
+                nextwaveController.NextWaveScreen(wavesData.WavesNumber);
             }
 
         }

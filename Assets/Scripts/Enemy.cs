@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerStatsSO playerStats;
     private Enemy enemyScript;
     private GameObject player;
     private Rigidbody2D enemyRb;
@@ -32,7 +34,7 @@ public class Enemy : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLay;
     private int hitDamage;
-    private float attackDistance = 2.5f;
+    private float attackDistance = 1.5f;
     private int enemyDamage = 1;
     public bool isAttacking = false;
     private bool addToList = true;
@@ -86,9 +88,12 @@ public class Enemy : MonoBehaviour
                     }
                 break;
             case State.Attack:
-                transform.Translate(fallowPlayer * Time.deltaTime * enemySpeed);
-                    
-                if(Vector2.Distance(transform.position, player.transform.position) < attackDistance)
+                if (Vector2.Distance(transform.position, player.transform.position) > attackDistance)
+                {
+                    transform.Translate(fallowPlayer * Time.deltaTime * enemySpeed);
+                }
+
+                if (Vector2.Distance(transform.position, player.transform.position) < attackDistance)
                 {
                     animator.SetTrigger("Attack");
                     isAttacking = true;
@@ -126,6 +131,7 @@ public class Enemy : MonoBehaviour
         enemyScript.enabled = false;
         if (addToList == true)
         {
+            playerStats.Score += 10;
             spawnManager.deadEnemies.Add(gameObject);
             addToList = false;
         }

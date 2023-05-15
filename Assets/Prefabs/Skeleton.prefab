@@ -199,8 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231e15a2896328844979c48ef4ee3d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: 37aee2567a933e544bca71cffe7a511e, type: 2}
   attackPointE: {fileID: 5984665260367370468}
   attackRange: 0.61
   playerLay:
     serializedVersion: 2
     m_Bits: 64
+  isAttacking: 0
+  spawnManager: {fileID: 0}

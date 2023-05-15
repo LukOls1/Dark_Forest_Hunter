@@ -6,6 +6,8 @@ using TMPro;
 
 public class NextWaveController : MonoBehaviour
 {
+    [SerializeField]
+    private WavesDataSO wavesData;
     private float timeLeft = 5f;
     private SpawnManager spawnManager;
     public TextMeshProUGUI countDownText;
@@ -31,7 +33,7 @@ public class NextWaveController : MonoBehaviour
         if (timeLeft < -1)
         {
             spawnManager.enemyCount = 0;
-            spawnManager.enemyLenght += 2;
+            wavesData.EnemyNumber += 2;
             spawnManager.deadEnemies.Clear();
             spawnManager.wavesDownCounted = false;
             timeLeft = 5f;
