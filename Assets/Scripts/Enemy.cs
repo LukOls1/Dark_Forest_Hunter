@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private PlayerStatsSO playerStats;
+    [SerializeField]
+    private Animator bloodFX;
     private Enemy enemyScript;
     private GameObject player;
     private Rigidbody2D enemyRb;
@@ -34,7 +36,7 @@ public class Enemy : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLay;
     private int hitDamage;
-    private float attackDistance = 1.5f;
+    private float attackDistance = 1.0f;
     private int enemyDamage = 1;
     public bool isAttacking = false;
     private bool addToList = true;
@@ -88,19 +90,20 @@ public class Enemy : MonoBehaviour
                     }
                 break;
             case State.Attack:
-                if (Vector2.Distance(transform.position, player.transform.position) > attackDistance)
+                if (Vector2.Distance(transform.position, player.transform.position) > attackDistance && !isAttacking)
                 {
                     transform.Translate(fallowPlayer * Time.deltaTime * enemySpeed);
                 }
 
                 if (Vector2.Distance(transform.position, player.transform.position) < attackDistance)
                 {
-                    animator.SetTrigger("Attack");
                     isAttacking = true;
-                    if (isAttacking == true)
+                    if (isAttacking)
                     {
+                        animator.SetTrigger("Attack");
                         enemyRb.velocity = new Vector2(0, 0);
                     }
+ 
                 }
                 
                 if(Vector2.Distance(transform.position, player.transform.position) > disengageDistance)
@@ -119,7 +122,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int hitDamage)
     {
         curentHealth -= hitDamage;
-        animator.SetTrigger("Hurt");
+        gameObject.GetComponentInChildren<ParticleSystem>().Play();
         if (curentHealth <= 0)
         {
             state = State.Dead;
@@ -190,6 +193,8 @@ public class Enemy : MonoBehaviour
         {
             player.GetComponent<PlayerController>().PlayerHurt(enemyDamage);
         }
+        isAttacking = false;
+        animator.ResetTrigger("Attack");
     }
     private void OnDrawGizmosSelected()
     {

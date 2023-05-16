@@ -16,8 +16,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
 
     //Attack vars 
-    //private float fireRate = 2.0f;
-    [SerializeField] private float attackRange = 0.5f;
+    [SerializeField]
+    private Animator bloodFX;
+    [SerializeField] 
+    private float attackRange = 0.5f;
     private int hitDamage = 1;
     public Transform attackPoint;
     private float timeToNextAttack = 0;
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerHurt(int takeHit)
     {
+        gameObject.GetComponentInChildren<ParticleSystem>().Play();
         playerStats.Life -= takeHit;
         Debug.Log(playerStats.Life.ToString());
     }
