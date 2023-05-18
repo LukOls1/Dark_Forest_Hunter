@@ -9,6 +9,7 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private PlayerStatsSO playerStats;
     private bool atkSpeedBought = false;
+    public LevelLoader levelLoader;
     public Button buyAttack;
     public Button buyHP;
     public Button nextDayButton;
@@ -49,7 +50,7 @@ public class ShopController : MonoBehaviour
     }
     public void NextDay()
     {
-        SceneManager.LoadScene("Main Scene", LoadSceneMode.Single);
+        levelLoader.LoadNextLevel("Main Scene");
     }
 
 }

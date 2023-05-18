@@ -9,11 +9,6 @@ public class PlayerStatsUI : MonoBehaviour
     public TextMeshProUGUI scoreText;
     [SerializeField]
     private PlayerStatsSO playerStats;
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         UpdateStats();

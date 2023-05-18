@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class EndLevelController : MonoBehaviour
 {
+    [SerializeField]
+    private LevelLoader levelLoader;
     private float nextSceneTime = 3f;
     void Start()
     {
@@ -20,7 +22,7 @@ public class EndLevelController : MonoBehaviour
         nextSceneTime -= Time.deltaTime;
         if(nextSceneTime <= 0)
         {
-            SceneManager.LoadScene("ShopScene", LoadSceneMode.Single);
+            levelLoader.LoadNextLevel("ShopScene");
             gameObject.SetActive(false);
         }
     }
