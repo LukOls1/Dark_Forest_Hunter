@@ -16,8 +16,8 @@ public class StartGameMenu : MonoBehaviour
 
     private void Awake()
     {
-        wavesData.WavesNumber = 3;
-        wavesData.EnemyNumber = 2;
+        wavesData.WavesNumber = wavesData.StartWaves;
+        wavesData.EnemyNumber = wavesData.StartEnemy;
         playerStats.Life = 4;
         playerStats.Score = 0;
         playerStats.AtkSpeed = 1.5f;

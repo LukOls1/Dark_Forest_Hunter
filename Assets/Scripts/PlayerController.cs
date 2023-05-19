@@ -6,12 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     public bool isGameActive = true;
     // Move vars
-    [SerializeField] private float playerSpeed = 7.0f;
+    [SerializeField] 
+    private float playerSpeed = 7.0f;
     private Vector2 xMove;
     private bool groundedPlayer = true;
     private float horizontalInput;
     private Animator animator;
-    [SerializeField] private float jumpForce = 8.0f;
+    [SerializeField] 
+    private float jumpForce = 8.0f;
     private bool isFacingRight = true;
     private Rigidbody2D playerRb;
 
@@ -25,10 +27,14 @@ public class PlayerController : MonoBehaviour
     private float timeToNextAttack = 0;
     public LayerMask enemyLayers;
     private bool isDead = false;
-    [SerializeField] private PlayerStatsSO playerStats;
+    [SerializeField] 
+    private PlayerStatsSO playerStats;
+    AudioManager audioManager;
+    [SerializeField] AudioSource hitSound;
 
     void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
     }
@@ -71,6 +77,10 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isDead", true);
             horizontalInput = 0;
         }
+        if (playerStats.Life < 0)
+        {
+            playerStats.Life = 0;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -111,6 +121,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerHurt(int takeHit)
     {
+        audioManager.playSingleSound(hitSound);
         gameObject.GetComponentInChildren<ParticleSystem>().Play();
         playerStats.Life -= takeHit;
         Debug.Log(playerStats.Life.ToString());

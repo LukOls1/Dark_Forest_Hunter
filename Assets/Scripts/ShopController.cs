@@ -8,6 +8,10 @@ public class ShopController : MonoBehaviour
 {
     [SerializeField]
     private PlayerStatsSO playerStats;
+    [SerializeField]
+    private WavesDataSO wavesData;
+    private AudioManager audioManager;
+    private AudioSource clickSound;
     private bool atkSpeedBought = false;
     public LevelLoader levelLoader;
     public Button buyAttack;
@@ -15,7 +19,9 @@ public class ShopController : MonoBehaviour
     public Button nextDayButton;
     void Start()
     {
-        
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        clickSound = GameObject.Find("AudioManager").GetComponent<AudioSource>();
+
     }
 
     void Update()
@@ -33,6 +39,7 @@ public class ShopController : MonoBehaviour
     {
         if (atkSpeedBought == false && playerStats.Score >= 200)
         {
+            audioManager.playSingleSound(clickSound);
             playerStats.AtkSpeed /= 2;
             playerStats.Score -= 200;
             atkSpeedBought = true;
@@ -43,6 +50,7 @@ public class ShopController : MonoBehaviour
     {
         if (playerStats.Score >= 50 && playerStats.Life < 4)
         {
+            audioManager.playSingleSound(clickSound);
             playerStats.Life += 1;
             playerStats.Score -= 50;
             Debug.Log(playerStats.Life.ToString());
@@ -50,6 +58,9 @@ public class ShopController : MonoBehaviour
     }
     public void NextDay()
     {
+        audioManager.playSingleSound(clickSound);
+        wavesData.WavesNumber = wavesData.StartWaves + 1;
+        wavesData.EnemyNumber += 1;
         levelLoader.LoadNextLevel("Main Scene");
     }
 

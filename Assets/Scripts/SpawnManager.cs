@@ -12,9 +12,6 @@ public class SpawnManager : MonoBehaviour
     private int randomizePosition;
     private int spawnRate = 2;
     private float timeToNextEnemy = 0;
-
-    //public int enemyWaves = 3;
-    //public int enemyLenght = 1;
     [SerializeField]
     private WavesDataSO wavesData;
     public GameObject nextWaveScreen;
@@ -23,13 +20,6 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> deadEnemies;
     public int enemyCount = 0;
     public bool wavesDownCounted = false;
-
-
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         enemyDeaths = deadEnemies.Count;

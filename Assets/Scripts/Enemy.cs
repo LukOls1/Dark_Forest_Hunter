@@ -41,8 +41,11 @@ public class Enemy : MonoBehaviour
     public bool isAttacking = false;
     private bool addToList = true;
     public SpawnManager spawnManager;
+    [SerializeField] AudioSource hitSound;
+    AudioManager audioManager;
     void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         enemyScript = GetComponent<Enemy>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         startPosition = transform.position;
@@ -121,6 +124,7 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int hitDamage)
     {
+        audioManager.playSingleSound(hitSound);
         curentHealth -= hitDamage;
         gameObject.GetComponentInChildren<ParticleSystem>().Play();
         if (curentHealth <= 0)

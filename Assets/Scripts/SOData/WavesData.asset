@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a00a8101358ab49a90e6023e5840e4, type: 3}
   m_Name: WavesData
   m_EditorClassIdentifier: 
-  wavesNumber: 0
-  enemyNumber: 2
+  wavesNumber: 4
+  enemyNumber: 3
+  startWaves: 3
+  startEnemy: 2

@@ -9,6 +9,10 @@ public class WavesDataSO : ScriptableObject
     private int wavesNumber;
     [SerializeField]
     private int enemyNumber;
+    [SerializeField]
+    private int startWaves;
+    [SerializeField]
+    private int startEnemy;
 
     public int WavesNumber
     {
@@ -19,5 +23,15 @@ public class WavesDataSO : ScriptableObject
     {
         get { return enemyNumber; }
         set { enemyNumber = value; }
+    }
+    public int StartWaves
+    {
+        get { return startWaves; }
+        set { startWaves = value; }
+    }
+    public int StartEnemy
+    {
+        get { return startEnemy; }
+        set { startEnemy = value; }
     }
 }
