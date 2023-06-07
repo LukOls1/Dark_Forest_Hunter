@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e08e51c6926df439a177a91293ace2, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  life: 98
-  score: 1180
-  atkSpeed: 0.1875
+  life: 4
+  score: 0
+  atkSpeed: 1
+  endScore: 0

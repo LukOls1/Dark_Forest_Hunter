@@ -139,6 +139,7 @@ public class Enemy : MonoBehaviour
         if (addToList == true)
         {
             playerStats.Score += 10;
+            playerStats.EndScore += 10;
             spawnManager.deadEnemies.Add(gameObject);
             addToList = false;
         }

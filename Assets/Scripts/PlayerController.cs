@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight = true;
     private Rigidbody2D playerRb;
 
+
     //Attack vars 
     [SerializeField]
     private Animator bloodFX;
@@ -29,8 +30,11 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
     [SerializeField] 
     private PlayerStatsSO playerStats;
-    AudioManager audioManager;
-    [SerializeField] AudioSource hitSound;
+    private AudioManager audioManager;
+    [SerializeField] 
+    AudioSource hitSound;
+    [SerializeField]
+    private GameObject gameOverScreen;
 
     void Start()
     {
@@ -76,6 +80,7 @@ public class PlayerController : MonoBehaviour
             isDead = true;
             animator.SetBool("isDead", true);
             horizontalInput = 0;
+            gameOverScreen.SetActive(true);
         }
         if (playerStats.Life < 0)
         {

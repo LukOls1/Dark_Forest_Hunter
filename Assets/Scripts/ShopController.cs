@@ -59,6 +59,7 @@ public class ShopController : MonoBehaviour
     public void NextDay()
     {
         audioManager.playSingleSound(clickSound);
+        audioManager.fadeOut = true;
         wavesData.WavesNumber = wavesData.StartWaves + 1;
         wavesData.EnemyNumber += 1;
         levelLoader.LoadNextLevel("Main Scene");

@@ -11,6 +11,9 @@ public class PlayerStatsSO : ScriptableObject
     private float score;
     [SerializeField]
     private float atkSpeed;
+    [SerializeField]
+    private float endScore;
+    
 
     public float Life
     {
@@ -26,5 +29,10 @@ public class PlayerStatsSO : ScriptableObject
     {
         get { return atkSpeed; }
         set { atkSpeed = value; }
+    }
+    public float EndScore
+    {
+        get { return endScore; }
+        set { endScore = value; }
     }
 }
