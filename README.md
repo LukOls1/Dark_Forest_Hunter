@@ -1,6 +1,7 @@
-# Dark_Forest_Hunter
+## Dark Forest Hunter
 
 My first game template to gather and expand my skills gained from Unity Learn tutorials.
+<p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=lukols1&show_icons=true&locale=en&layout=compact" alt="lukols1" /></p> 
 
 Implemented features:
   - enemy AI state machine
@@ -14,3 +15,5 @@ Use A and D to walk around, W to jump, and Space to attack.
 Kill all enemies to finish all waves. 
 
 Enjoy!
+
+### Link to game => https://play.unity.com/mg/other/dark-forest-hunter
