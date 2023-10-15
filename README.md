@@ -1,7 +1,8 @@
 ## Dark Forest Hunter
 
 My first game template to gather and expand my skills gained from Unity Learn tutorials.
-<p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=lukols1&show_icons=true&locale=en&layout=compact" alt="lukols1" /></p> 
+![](https://github.com/LukOls1/Dark_Forest_Hunter/blob/main/ReadmeFiles/GamePlayGif1.gif)
+![](https://github.com/LukOls1/Dark_Forest_Hunter/blob/main/ReadmeFiles/GamePlayGif2.gif)
 
 Implemented features:
   - enemy AI state machine
